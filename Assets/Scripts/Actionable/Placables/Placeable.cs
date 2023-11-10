@@ -6,7 +6,7 @@ using System;
 
 public class Placeable : MonoBehaviour
 {
-    public float SnapDistance;
+    public float SnapDistance = 5;
     public PlacableType type;
     public bool isFoundation = false;
 
@@ -15,9 +15,14 @@ public class Placeable : MonoBehaviour
 
     public Material previewMat;
 
+    public GameObject Display;
+    public GameObject PlacedDisplay;
+    public bool placed;
+
     public enum PlacableType
     {
-        Log
+        Log,
+        Plank
     }
 
     void Start()
@@ -39,14 +44,35 @@ public class Placeable : MonoBehaviour
             transform.position = loc;
             transform.rotation = rot;
 
-            foreach (var a in GetComponentsInChildren<PlaceableAnchor>().Where(a => usedAnchor == null || !usedAnchor.PlacesHorizontal || a.ValidWhenHorizontal))
+            foreach (var a in GetComponentsInChildren<PlaceableAnchor>().Where(a => usedAnchor == null || (usedAnchor.PlacesHorizontal  && a.ValidWhenHorizontal ) || (!usedAnchor.PlacesHorizontal && a.ValidWhenVertical)))
             {
                 a.Add();
             }
-
+            TransformToPlaced();
             return true;
         }
         return false;
+    }
+
+    public void Remove()
+    {
+        foreach (var anchor in GetComponentsInChildren<PlaceableAnchor>())
+        {
+            anchor.Remove();
+        }
+        TransformToHoldable();
+    }
+
+    public virtual void TransformToPlaced()
+    {
+        if (Display != null) Display.SetActive(false);
+        if (PlacedDisplay != null) PlacedDisplay.SetActive(true);
+    }
+
+    public virtual void TransformToHoldable()
+    {
+        if (PlacedDisplay != null) PlacedDisplay.SetActive(false);
+        if (Display != null) Display.SetActive(true);
     }
 
     GameObject preview;
@@ -60,6 +86,7 @@ public class Placeable : MonoBehaviour
             if (preview == null)
             {
                 preview = Instantiate(gameObject);
+                preview.GetComponent<Placeable>().TransformToPlaced();
                 var comps = preview.GetComponentsInChildren<Component>();
                 foreach (var component in comps)
                 {

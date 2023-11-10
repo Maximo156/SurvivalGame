@@ -10,6 +10,8 @@ public class PlaceableAnchor : MonoBehaviour, Trackable
 
     public bool ValidWhenHorizontal;
 
+    public bool ValidWhenVertical;
+
     [Serializable]
     public class PlaceableTypeInfo
     {

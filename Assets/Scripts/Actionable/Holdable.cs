@@ -54,9 +54,9 @@ public class Holdable : MonoBehaviour
             obj.transform.rotation = transform.rotation;
         }
 
-        foreach (var anchor in obj.GetComponentsInChildren<PlaceableAnchor>())
+        foreach (var placable in obj.GetComponentsInChildren<Placeable>())
         {
-            anchor.Remove();
+            placable.Remove();
         }
 
         return true;

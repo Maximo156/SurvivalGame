@@ -32,7 +32,7 @@ public class SpawnOnBreak : Breakable
         {
             foreach(var spawnable in spawnables)
             {
-                Instantiate(spawnable.obj, transform.position + spawnable.offset, spawnable.Rotation, null);
+                Instantiate(spawnable.obj, transform.position + transform.rotation * spawnable.offset, transform.rotation * spawnable.Rotation, null);
             }
             ObjectManager.RemoveObject(transform.position);
             hitsLeft.Remove(transform.position);
