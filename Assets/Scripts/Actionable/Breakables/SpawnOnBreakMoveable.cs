@@ -25,15 +25,18 @@ public class SpawnOnBreakMoveable : Breakable
 
     public override void Break(int numHits = 1)
     {
-        hitsLeft -= numHits;
-
-        if (hitsLeft <= 0)
+        if (CanBreak)
         {
-            foreach (var spawnable in spawnables)
+            hitsLeft -= numHits;
+
+            if (hitsLeft <= 0)
             {
-                Instantiate(spawnable.obj, transform.position + transform.rotation * spawnable.offset, transform.rotation * spawnable.Rotation, null);;
+                foreach (var spawnable in spawnables)
+                {
+                    Instantiate(spawnable.obj, transform.position + transform.rotation * spawnable.offset, transform.rotation * spawnable.Rotation, null); ;
+                }
+                Destroy(gameObject);
             }
-            Destroy(gameObject);
         }
     }
 }

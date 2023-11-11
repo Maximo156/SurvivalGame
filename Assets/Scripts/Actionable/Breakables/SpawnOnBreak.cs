@@ -26,16 +26,19 @@ public class SpawnOnBreak : Breakable
 
     public override void Break(int numHits = 1)
     {
-        hitsLeft[transform.position] -= numHits;
-
-        if(hitsLeft[transform.position] <= 0)
+        if (CanBreak)
         {
-            foreach(var spawnable in spawnables)
+            hitsLeft[transform.position] -= numHits;
+
+            if (hitsLeft[transform.position] <= 0)
             {
-                Instantiate(spawnable.obj, transform.position + transform.rotation * spawnable.offset, transform.rotation * spawnable.Rotation, null);
+                foreach (var spawnable in spawnables)
+                {
+                    Instantiate(spawnable.obj, transform.position + transform.rotation * spawnable.offset, transform.rotation * spawnable.Rotation, null);
+                }
+                ObjectManager.RemoveObject(transform.position);
+                hitsLeft.Remove(transform.position);
             }
-            ObjectManager.RemoveObject(transform.position);
-            hitsLeft.Remove(transform.position);
         }
     }
 }

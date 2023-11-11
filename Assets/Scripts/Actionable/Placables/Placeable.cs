@@ -28,6 +28,7 @@ public class Placeable : MonoBehaviour
     void Start()
     {
         Hold.onObjectChange += DeletePreview;
+        TransformToHoldable();
     }
 
     public void DeletePreview(Holdable _)
@@ -65,12 +66,14 @@ public class Placeable : MonoBehaviour
 
     public virtual void TransformToPlaced()
     {
+        GetComponent<Breakable>()?.SetCanBreak(false);
         if (Display != null) Display.SetActive(false);
         if (PlacedDisplay != null) PlacedDisplay.SetActive(true);
     }
 
     public virtual void TransformToHoldable()
     {
+        GetComponent<Breakable>()?.SetCanBreak(true);
         if (PlacedDisplay != null) PlacedDisplay.SetActive(false);
         if (Display != null) Display.SetActive(true);
     }

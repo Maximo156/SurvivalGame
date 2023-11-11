@@ -3,31 +3,28 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-public class Hold : MonoBehaviour
+[RequireComponent(typeof(Interact))]
+public class Hold : MonoBehaviour, IInteractAction
 {
     public delegate void OnObjectChange(Holdable newObj);
     public static OnObjectChange onObjectChange;
 
-    public float grabDistance;
-
     Holdable currentlyHolding;
-    Camera cam;
-    // Start is called before the first frame update
-    void Start()
+
+    public KeyCode Code => KeyCode.E;
+
+    public int MouseButton => -1;
+
+    public void InteractWith(GameObject obj)
     {
-        cam = Camera.main;
+        var h = obj.GetComponentInParent<Holdable>();
+        if (h != null && obj.transform.parent != transform)
+            StackOne(h);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
-        {
-            if (Utilities.RaycastForType<Holdable>(cam.transform.position, cam.transform.forward, grabDistance, out var obj) && obj.transform.parent != transform)
-            {
-                StackOne(obj);
-            }
-        }
         if (Input.GetKeyDown(KeyCode.Q))
         {
             DropOne(true, out _);
