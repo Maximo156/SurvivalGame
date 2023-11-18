@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using System.Linq;
 
 [RequireComponent(typeof(Interact))]
 public class Hold : MonoBehaviour, IInteractAction
@@ -9,7 +10,7 @@ public class Hold : MonoBehaviour, IInteractAction
     public delegate void OnObjectChange(Holdable newObj);
     public static OnObjectChange onObjectChange;
 
-    Holdable currentlyHolding;
+    public Holdable currentlyHolding { get; private set; }
 
     public KeyCode Code => KeyCode.E;
 
@@ -17,7 +18,18 @@ public class Hold : MonoBehaviour, IInteractAction
 
     public void InteractWith(GameObject obj)
     {
-        var h = obj.GetComponentInParent<Holdable>();
+        var s = obj.GetComponentsInParent<GroundStackable>().FirstOrDefault(c => c.enabled);
+        Holdable h = null;
+        if(s != null)
+        {
+            s.DropOne(true, out var dropped);
+            dropped.GetComponent<GroundStackable>().enabled = true;
+            h = dropped.GetComponentInParent<Holdable>();
+        }
+        else
+        {
+            h = obj.GetComponentInParent<Holdable>();
+        }
         if (h != null && obj.transform.parent != transform)
             StackOne(h);
     }
@@ -37,7 +49,7 @@ public class Hold : MonoBehaviour, IInteractAction
         currentlyHolding = null;
     }
 
-    public bool DropOne(bool reset, out Holdable holdable)
+    public bool DropOne(bool reset, out Stackable holdable)
     {
         holdable = null;
         bool empty = currentlyHolding?.DropOne(reset, out holdable) ?? true;
@@ -51,12 +63,15 @@ public class Hold : MonoBehaviour, IInteractAction
 
     public void StackOne(Holdable obj)
     {
-        if (obj.id != currentlyHolding?.id)
+        if (obj != null)
         {
-            NewHoldable();
-            currentlyHolding = obj;
-            onObjectChange(currentlyHolding);
+            if (obj.id != currentlyHolding?.id)
+            {
+                NewHoldable();
+                currentlyHolding = obj;
+                onObjectChange(currentlyHolding);
+            }
+            currentlyHolding.Stack(obj, transform);
         }
-        currentlyHolding.Stack(obj, transform);
     }
 }

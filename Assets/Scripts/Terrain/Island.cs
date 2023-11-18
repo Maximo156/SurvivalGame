@@ -29,6 +29,11 @@ public class Island : MonoBehaviour
     public float GrassStop { get; private set; }
     public float RockStop { get; private set; }
 
+    public Color SandColor { get; private set; }
+    public Color GrassColor { get; private set; }
+    public Color RockColor { get; private set; }
+    public Color SnowColor { get; private set; }
+
     Transform player;
 
     List<Chunk> chunks = new List<Chunk>();
@@ -47,6 +52,11 @@ public class Island : MonoBehaviour
         SandStop = mat.GetFloat("_SandStop") * maxHeight;
         GrassStop = mat.GetFloat("_GrassStop") * maxHeight;
         RockStop = mat.GetFloat("_RockStop") * maxHeight;
+
+        SandColor = mat.GetColor("_SandColor");
+        GrassColor = mat.GetColor("_GrassColor");
+        RockColor = mat.GetColor("_RockColor");
+        SnowColor = mat.GetColor("_SnowColor");
 
         player = Camera.main.transform.parent;
 

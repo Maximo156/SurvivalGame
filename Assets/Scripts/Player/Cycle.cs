@@ -8,8 +8,16 @@ public class Cycle : MonoBehaviour, IInteractAction
 
     public int MouseButton => 1;
 
+    private Place place;
+
+    void Start()
+    {
+        place = GetComponent<Place>();
+    }
+
     public void InteractWith(GameObject obj)
     {
-        obj.GetComponentInParent<Cycleable>()?.Cycle();
+        if(!place.build)
+            obj.GetComponentInParent<Cycleable>()?.Cycle();
     }
 }

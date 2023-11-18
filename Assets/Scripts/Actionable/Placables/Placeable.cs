@@ -17,7 +17,8 @@ public class Placeable : MonoBehaviour
 
     public GameObject Display;
     public GameObject PlacedDisplay;
-    public bool placed;
+
+    public bool placedHorizontal { get; private set; }
 
     public enum PlacableType
     {
@@ -25,10 +26,15 @@ public class Placeable : MonoBehaviour
         Plank
     }
 
+    GroundStackable stackable;
+    Breakable breakable;
+
     void Start()
     {
         Hold.onObjectChange += DeletePreview;
         TransformToHoldable();
+        stackable = GetComponent<GroundStackable>();
+        breakable = GetComponent<Breakable>();
     }
 
     public void DeletePreview(Holdable _)
@@ -44,6 +50,8 @@ public class Placeable : MonoBehaviour
             transform.parent = null;
             transform.position = loc;
             transform.rotation = rot;
+
+            placedHorizontal = usedAnchor?.PlacesHorizontal ?? false;
 
             foreach (var a in GetComponentsInChildren<PlaceableAnchor>().Where(a => usedAnchor == null || (usedAnchor.PlacesHorizontal  && a.ValidWhenHorizontal ) || (!usedAnchor.PlacesHorizontal && a.ValidWhenVertical)))
             {
@@ -66,14 +74,18 @@ public class Placeable : MonoBehaviour
 
     public virtual void TransformToPlaced()
     {
-        GetComponent<Breakable>()?.SetCanBreak(false);
+        if (stackable != null)
+            stackable.enabled = false;
+        breakable?.SetCanBreak(false);
         if (Display != null) Display.SetActive(false);
         if (PlacedDisplay != null) PlacedDisplay.SetActive(true);
     }
 
     public virtual void TransformToHoldable()
     {
-        GetComponent<Breakable>()?.SetCanBreak(true);
+        if (stackable != null)
+            stackable.enabled = true;
+        breakable?.SetCanBreak(true);
         if (PlacedDisplay != null) PlacedDisplay.SetActive(false);
         if (Display != null) Display.SetActive(true);
     }

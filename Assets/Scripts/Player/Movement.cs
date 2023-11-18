@@ -19,7 +19,7 @@ public class Movement : MonoBehaviour
     private Camera playerCamera;
 
     public static bool canMove = true;
-
+    public static bool canLook = true;
 
     CharacterController characterController;
     void Start()
@@ -33,6 +33,8 @@ public class Movement : MonoBehaviour
 
     void Update()
     {
+        canMove = LockableInput.Movement;
+        canLook = LockableInput.Rotation;
 
         #region Handles Movment
         Vector3 forward = transform.TransformDirection(Vector3.forward);
@@ -66,7 +68,7 @@ public class Movement : MonoBehaviour
         #region Handles Rotation
         characterController.Move(moveDirection * Time.deltaTime);
 
-        if (canMove)
+        if (canLook)
         {
             rotationX += -Input.GetAxis("Mouse Y") * lookSpeed;
             rotationX = Mathf.Clamp(rotationX, -lookXLimit, lookXLimit);

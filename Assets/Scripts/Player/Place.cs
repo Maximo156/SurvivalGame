@@ -7,7 +7,7 @@ public class Place : MonoBehaviour
 {
     public float placeDistance;
     Camera cam;
-    bool build = false;
+    public bool build { get; private set; }  = false;
     Holdable holdable;
     Hold hold;
     // Start is called before the first frame update
@@ -18,7 +18,7 @@ public class Place : MonoBehaviour
         Hold.onObjectChange += GetNewHoldable;
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         if (holdable?.placeable != null)
         {
@@ -32,9 +32,9 @@ public class Place : MonoBehaviour
             {
                 if(hold.DropOne(false, out var dropped))
                 {
-                    if(!dropped?.placeable?.Place(cam, placeDistance) ?? true)
+                    if(!(dropped as Holdable)?.placeable?.Place(cam, placeDistance) ?? true)
                     {
-                        hold.StackOne(dropped);
+                        hold.StackOne(dropped as Holdable);
                     }
                 }
             }

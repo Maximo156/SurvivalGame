@@ -317,6 +317,7 @@ GameObject:
   - component: {fileID: 5370249407737992224}
   - component: {fileID: 7486288497450038598}
   - component: {fileID: 7209540967757662606}
+  - component: {fileID: 8911217412923468743}
   m_Layer: 0
   m_Name: Door
   m_TagString: Untagged
@@ -378,6 +379,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 3.0084894, y: 0.11, z: 0.82749665}
   m_Center: {x: -0.7487081, y: 0, z: -1.0879242}
+--- !u!65 &8911217412923468743
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2950276376179758142}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2.1426768, y: 0.11, z: 1.345304}
+  m_Center: {x: -1.1803682, y: 0, z: -0.001172781}
 --- !u!1 &3402663823523212502
 GameObject:
   m_ObjectHideFlags: 0
@@ -471,7 +485,6 @@ MonoBehaviour:
   previewMat: {fileID: 2100000, guid: c31d04915d41cbf49bf251aeac8bdd96, type: 2}
   Display: {fileID: 805296607886338710}
   PlacedDisplay: {fileID: 5388784424320567422}
-  placed: 0
 --- !u!1 &5388784424320567422
 GameObject:
   m_ObjectHideFlags: 0
@@ -518,6 +531,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c51f0fe8201fc1f47b327a5a1d6da8fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cycleHorizontal: 0
 --- !u!1 &7014282931019047626
 GameObject:
   m_ObjectHideFlags: 0
@@ -696,7 +710,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6856458150625012890
 Transform:
   m_ObjectHideFlags: 0

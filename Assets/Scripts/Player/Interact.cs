@@ -28,13 +28,16 @@ public class Interact : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        var frameActions = actions.Where(a => (a.Code != KeyCode.None && Input.GetKeyDown(a.Code)) || (a.MouseButton != -1 && Input.GetMouseButtonDown(a.MouseButton)));
-        if(frameActions.Count() != 0 && Physics.Raycast(cam.transform.position, cam.transform.forward, out var hitInfo, reach))
+        if (LockableInput.Interact)
         {
-            var hitObject = hitInfo.collider.gameObject;
-            foreach(var action in frameActions)
+            var frameActions = actions.Where(a => (a.Code != KeyCode.None && Input.GetKeyDown(a.Code)) || (a.MouseButton != -1 && Input.GetMouseButtonDown(a.MouseButton)));
+            if (frameActions.Count() != 0 && Physics.Raycast(cam.transform.position, cam.transform.forward, out var hitInfo, reach))
             {
-                action.InteractWith(hitObject);
+                var hitObject = hitInfo.collider.gameObject;
+                foreach (var action in frameActions)
+                {
+                    action.InteractWith(hitObject);
+                }
             }
         }
     }

@@ -63,6 +63,7 @@ GameObject:
   - component: {fileID: 8317149094325813017}
   - component: {fileID: 252338634037676161}
   - component: {fileID: 1703212724251697230}
+  - component: {fileID: 1967082461490318157}
   m_Layer: 0
   m_Name: Log3_summer
   m_TagString: Untagged
@@ -128,8 +129,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d2db747efeb1f64d88c92855764d325, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Rotation: {x: 0, y: 0.70710677, z: 0, w: 0.70710677}
-  StartOffset: {x: 1, y: 0, z: 0}
   Offsets:
   - {x: 0, y: 0.5, z: 0}
   - {x: 0, y: 1, z: 0}
@@ -141,6 +140,8 @@ MonoBehaviour:
   - {x: 0, y: 1, z: 0}
   - {x: 0, y: 1, z: 0}
   - {x: 0, y: 1, z: 0}
+  Rotation: {x: 0, y: 0.70710677, z: 0, w: 0.70710677}
+  StartOffset: {x: 1, y: 0, z: 0}
 --- !u!114 &252338634037676161
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -161,7 +162,6 @@ MonoBehaviour:
   previewMat: {fileID: 2100000, guid: c31d04915d41cbf49bf251aeac8bdd96, type: 2}
   Display: {fileID: 9130709809852964887}
   PlacedDisplay: {fileID: 9130709809852964887}
-  placed: 0
 --- !u!114 &1703212724251697230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -188,6 +188,23 @@ MonoBehaviour:
   - obj: {fileID: 3402663823523212502, guid: da839d0605a445a4d87cba1be48e70ef, type: 3}
     offset: {x: 0, y: 0, z: 0.45}
     Rotation: {x: 0, y: 0.70710677, z: 0, w: 0.70710677}
+--- !u!114 &1967082461490318157
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 781739597678681818}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7253eef8331e7f4a94cf5901839d907, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Offsets:
+  - {x: 0, y: 0, z: 0.75}
+  - {x: 0, y: 0.65, z: 0.375}
+  - {x: 0, y: 0, z: -0.75}
+  - {x: 0, y: 0.65, z: -0.375}
 --- !u!1 &1074042500089182691
 GameObject:
   m_ObjectHideFlags: 0
